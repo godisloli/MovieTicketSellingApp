@@ -95,6 +95,12 @@
     <Compile Include="UpdateStatus.Designer.cs">
       <DependentUpon>UpdateStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateWindow.Designer.cs">
+      <DependentUpon>UpdateWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ViewDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </Compile>
     <EmbeddedResource Include="UpdateStatus.resx">
       <DependentUpon>UpdateStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateWindow.resx">
+      <DependentUpon>UpdateWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewDetails.resx">
       <DependentUpon>ViewDetails.cs</DependentUpon>

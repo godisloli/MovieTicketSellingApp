@@ -67,7 +67,7 @@
             }
         }
 
-        private void LoadTableData()
+        public void LoadTableData()
         {
             using (var connection = new SQLiteConnection(connectionString))
             {
@@ -140,6 +140,68 @@
             {
                 MessageBox.Show("Please select a single row to view details.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+        private void LoadTableData(string searchTerm = "")
+        {
+            movieListView.Items.Clear();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT * FROM Movies";
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    query += " WHERE Title LIKE @Search OR ID LIKE @Search OR Tags LIKE @Search";
+                }
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Search", "%" + searchTerm + "%");
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime startTime = DateTime.Parse(reader["StartTime"].ToString());
+                            DateTime endTime = DateTime.Parse(reader["EndTime"].ToString());
+
+                            if (startTime < DateTime.Now || endTime < DateTime.Now)
+                            {
+                                continue;
+                            }
+
+                            this.price = Convert.ToDouble(reader["Price"]);
+
+                            var items = new string[movieListView.Columns.Count];
+
+                            for (int i = 0, columnIndex = 0; i < reader.FieldCount; i++)
+                            {
+                                string columnName = reader.GetName(i);
+                                if (movieListView.Columns.Cast<ColumnHeader>().Any(col => col.Text == columnName))
+                                {
+                                    items[columnIndex++] = reader[i].ToString();
+                                }
+                            }
+
+                            var listViewItem = new ListViewItem(items);
+                            movieListView.Items.Add(listViewItem);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void searcherTxt_TextChanged(object sender, EventArgs e)
+        {
+            string searchTerm = searcherTxt.Text.Trim();
+            LoadTableData(searchTerm);
+        }
+
+        private void movieListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

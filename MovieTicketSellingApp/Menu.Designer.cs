@@ -95,6 +95,7 @@
             this.movieListView.Size = new System.Drawing.Size(931, 460);
             this.movieListView.TabIndex = 0;
             this.movieListView.UseCompatibleStateImageBehavior = false;
+            this.movieListView.SelectedIndexChanged += new System.EventHandler(this.movieListView_SelectedIndexChanged);
             // 
             // title
             // 
@@ -123,6 +124,7 @@
             this.searcherTxt.Name = "searcherTxt";
             this.searcherTxt.Size = new System.Drawing.Size(931, 20);
             this.searcherTxt.TabIndex = 7;
+            this.searcherTxt.TextChanged += new System.EventHandler(this.searcherTxt_TextChanged);
             // 
             // Menu
             // 
